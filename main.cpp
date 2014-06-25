@@ -3,16 +3,15 @@
 */
 
 #include "simple.hpp"
+#include "optimal.hpp"
 #include <assert.h>
 
 /*
   Schedule loader
+  simulates reading from a stream or file.
 */
 
-class Loader {
-public:
-  Scheduler * pSchedule;
-  Loader(Scheduler * pSchedule) : pSchedule(pSchedule) {
+void load(Scheduler * pSchedule)  {
     // load from file if we have time.
     // we assume that the lines are read in one by one, and we give them the line number as the time stamp.
     assert(pSchedule);
@@ -50,16 +49,18 @@ public:
     pSchedule->need(9,3,6); // Job # 6 needs 9 units
     // this can only fit on node 1
     //assign job 6 to node 1 for 3 time units.
-  }
-
-};
+}
 
 
 int main (int argc, char** argv) {
 
   Simple schedule;  
-  Loader loader(&schedule);
+  load(&schedule);
   schedule.report();
 
   // now test the new scheduler
+
+  Optimal schedule2;  
+  load(&schedule2);
+  schedule2.report();
 }
